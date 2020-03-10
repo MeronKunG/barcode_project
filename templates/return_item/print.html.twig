@@ -1,0 +1,143 @@
+{% block stylesheets %}
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+	<link href="{{ asset('css/styleA4test.css') }}" rel="stylesheet" type="text/css"/>
+	<style>
+
+		#customers {
+			font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+			border-collapse: collapse;
+		}
+
+		#customers td, #customers th {
+			border: 1px solid black;
+			padding: 8px;
+		}
+
+		#customers th {
+			padding-top: 12px;
+			padding-bottom: 12px;
+			text-align: left;
+			color: black;
+		}
+
+		.pagenum {
+			text-align: center;
+			display: none;
+		}
+
+		@media print {
+			.page-break {
+				display: block;
+				height: 0.3cm;
+				page-break-before: always;
+			}
+
+			.page-break-no {
+				display: block;
+				height: 0cm;
+				page-break-after: avoid;
+			}
+
+			.fixde {
+				position: fixed;
+				bottom: 20px;
+				margin-bottom: 30px;
+				text-align: center;
+			}
+
+			.pagenum {
+				position: absolute;
+				display: block;
+				margin-top: 280mm;
+				margin-left: 90mm;
+			}
+		}
+	</style>
+
+{% endblock %}
+
+{% block body %}
+
+	<body class="page">
+	<div class="page-break-no"></div>
+	<table width="80%" style="border:0px solid; margin-top:20px;" align="center" border="0" cellspacing="0"
+	       cellpadding="0">
+		<tr>
+			<th width="80"></th>
+			<th style="padding-top: 5px;text-align: center;"><label
+						style="font-size: 22px;height: 20px;">รายการสินค้าตีกลับ</label></th>
+			<th width="30" style="text-align: right; padding-top: 5px;"></th>
+		</tr>
+		<tr>
+			<th width="80"></th>
+			<th style="padding-top: 5px;text-align: center;"><label
+						style="font-size: 16px;height: 20px;margin-right: 20px;">วันที่ {{ dateTime }}</label></th>
+			<th width="30" style="text-align: right; padding-top: 5px;"
+			</th>
+		</tr>
+		<tr>
+			<th width="80"></th>
+			{% if merType == 1 %}
+				{% set merType = 'PARCEL' %}
+			{% else %}
+				{% set merType = 'WAREHOUSE' %}
+			{% endif %}
+			<th style="padding-top: 5px;text-align: center;"><label
+						style="font-size: 16px;height: 20px;margin-right: 20px;">ประเภท: {{ merType }}
+					ขนส่ง: {{ transporterName }}</label></th>
+			<th width="30" style="text-align: right; padding-top: 5px;"
+			</th>
+		</tr>
+
+		{% set page = 0 %}
+		{% set result = 0 %}
+		{% for key, item in codReturn %}
+		{% if loop.index0 is divisible by(20) %}
+		{% set page = page + 1 %}
+		<div class="pagenum">
+			<label> -Page {{ page }}-</label>
+		</div>
+		<tr>
+			<!-- page body -->
+			<table width="80%" style="border:0px solid" align="center" border="0" cellspacing="0" cellpadding="0"
+			       id="customers">
+				<tr style="height:30px;"></tr>
+				<tr>
+					<th style="text-align: center;">ต้นทาง</th>
+					<th style="text-align: center;">จำนวน</th>
+				</tr>
+				{% endif %}
+
+				<tr>
+					{% set result = result + (item | length) %}
+					<td style="text-align: center;">{{ key }}</td>
+					<td style="text-align: center;">{{ item | length }}</td>
+				</tr>
+
+				{% if loop.index is divisible by(20) or loop.last %}
+				<tr>
+					<td style="text-align: center;">จำนวนทั้งหมด</td>
+					<td style="text-align: center;">{{ result }}</td>
+				</tr>
+			</table>
+			<!-- end page body -->
+		</tr>
+	</table>
+
+	{% if not loop.last %}
+		<div class="page-break"></div>
+	{% endif %}
+	{% endif %}
+	{% endfor %}
+
+	</body>
+
+{% endblock %}
+
+
+
+{% block javascripts %}
+
+
+{% endblock %}

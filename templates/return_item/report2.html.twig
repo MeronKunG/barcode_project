@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}รายงาน | ระบบจัดการพัสดุตีกลับ{% endblock %}
+
+{% block body %}
+	<style>
+		/* Simple CSS3 Fade-in-down Animation */
+		.fadeInDown {
+			-webkit-animation-name: fadeInDown;
+			animation-name: fadeInDown;
+			-webkit-animation-duration: 1s;
+			animation-duration: 1s;
+			-webkit-animation-fill-mode: both;
+			animation-fill-mode: both;
+		}
+
+		@-webkit-keyframes fadeInDown {
+			0% {
+				opacity: 0;
+				-webkit-transform: translate3d(0, -100%, 0);
+				transform: translate3d(0, -100%, 0);
+			}
+			100% {
+				opacity: 1;
+				-webkit-transform: none;
+				transform: none;
+			}
+		}
+
+		@keyframes fadeInDown {
+			0% {
+				opacity: 0;
+				-webkit-transform: translate3d(0, -100%, 0);
+				transform: translate3d(0, -100%, 0);
+			}
+			100% {
+				opacity: 1;
+				-webkit-transform: none;
+				transform: none;
+			}
+		}
+
+		/* Simple CSS3 Fade-in Animation */
+		@-webkit-keyframes fadeIn {
+			from {
+				opacity: 0;
+			}
+			to {
+				opacity: 1;
+			}
+		}
+
+		@-moz-keyframes fadeIn {
+			from {
+				opacity: 0;
+			}
+			to {
+				opacity: 1;
+			}
+		}
+
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+			}
+			to {
+				opacity: 1;
+			}
+		}
+
+		.centered {
+			margin-top: 15%;
+		}
+
+	</style>
+	<div class="container fadeInDown centered">
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div class="card">
+					<div class="card-header"><i class="far fa-clipboard"></i> รายงาน 2</div>
+					<div class="card-body">
+						{{ form_start(form, {'action': path('print2'), 'method': 'GET', 'attr': {'target': '_blank'}}) }}
+						<fieldset class="form-group">
+							<div class="row">
+								<b class="col-form-label col-md-2 pt-0">ประเภท:*</b>
+								<div class="col-sm-10">
+									<div class="form-check">
+										<label class="col-md-2 col-form-label"></label>
+										{{ form_widget(form.merType[0]) }}
+										<label class="form-check-label">
+											PARCEL
+										</label>
+									</div>
+									<div class="form-check">
+										<label class="col-md-2 col-form-label"></label>
+										{{ form_widget(form.merType[1]) }}
+										<label class="form-check-label">
+											WAREHOUSE
+										</label>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+
+						{{ form_end(form) }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

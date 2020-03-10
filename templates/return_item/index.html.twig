@@ -1,0 +1,153 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ยิงบาร์โค้ด | ระบบจัดการพัสดุตีกลับ{% endblock %}
+
+{% block body %}
+    <style>
+        /* Simple CSS3 Fade-in-down Animation */
+        .fadeInDown {
+            -webkit-animation-name: fadeInDown;
+            animation-name: fadeInDown;
+            -webkit-animation-duration: 1s;
+            animation-duration: 1s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+        }
+
+        @-webkit-keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, -100%, 0);
+                transform: translate3d(0, -100%, 0);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: none;
+                transform: none;
+            }
+        }
+
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, -100%, 0);
+                transform: translate3d(0, -100%, 0);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: none;
+                transform: none;
+            }
+        }
+
+        /* Simple CSS3 Fade-in Animation */
+        @-webkit-keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @-moz-keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .centered {
+            margin-top: 15%;
+        }
+
+    </style>
+    <div class="container fadeInDown centered">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-barcode"></i> ยิงบาร์โค้ด</div>
+                    <div class="card-body">
+                        {{ form_start(form) }}
+                        <div class="form-group">
+{#                            <label for="exampleFormControlInput1">แทร็คกิ้ง</label>#}
+                            {% for k,s in street %}
+                                <h1>ถนน {{ k }}</h1>
+                                {% for key,car in s %}
+                                    <h2>{{ key }}</h2>
+                                    {% for people in car %}
+                                    <div>คนบนรถ{{ people }}</div>
+                                    {% endfor %}
+                                    <hr/>
+                                {% endfor %}
+                            {% endfor %}
+                            {#							{{ form_widget(form.mailCode,{"attr": {"class" : "form-control form-control-lg", "autofocus" : "true"}}) }}#}
+                        </div>
+                        {{ form_end(form) }}
+                        {% for label, flashes in app.session.flashbag.all %}
+                            {% if ( label == 'success' ) %}
+                                <div class="alert alert-success alert-dismissible fade show">
+                                    <div class="text-center">
+                                        <img class="img-fluid" src="{{ asset('images/checked.png') }}">
+                                    </div>
+                                    <div class="text-center">
+                                        <h2>{{ flashes[0] }}</h2>
+                                    </div>
+                                    <div class="text-center">
+                                        <h1>ต้นทาง: {{ flashes[1] }}</h1>
+                                    </div>
+                                    <div class="text-center">
+                                        <h2>ผู้รับ: {{ flashes[2] }}</h2>
+                                    </div>
+                                    <hr/>
+                                    <div class="text-center">
+                                        บันทึกสำเร็จ
+                                    </div>
+                                </div>
+                            {% elseif ( label == 'error' ) %}
+                                <div class="alert alert-danger alert-dismissible fade show">
+                                    <div class="text-center">
+                                        <img class="img-fluid" src="{{ asset('images/cancel.png') }}">
+                                    </div>
+                                    <div class="text-center">
+                                        <h2>{{ flashes[0] }}</h2>
+                                    </div>
+                                    <div class="text-center">
+                                        <h1>ต้นทาง: {{ flashes[1] }}</h1>
+                                    </div>
+                                    <div class="text-center">
+                                        <h2>ผู้รับ: {{ flashes[2] }}</h2>
+                                    </div>
+                                    <hr/>
+                                    <div class="text-center">
+                                        รายการซ้ำ เข้าระบบเมื่อ {{ flashes[3] | date('d-m-Y') }} กรุณาตรวจสอบ
+                                    </div>
+                                </div>
+                            {% elseif ( label == 'noData' ) %}
+                                <div class="alert alert-danger alert-dismissible fade show">
+                                    <div class="text-center">
+                                        <img class="img-fluid" src="{{ asset('images/cancel.png') }}">
+                                    </div>
+                                    <div class="text-center">
+                                        {{ flashes[0] }}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
